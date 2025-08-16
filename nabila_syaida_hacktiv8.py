@@ -4,7 +4,7 @@ from huggingface_hub import InferenceClient
 st.title("Chat dengan Model Hugging Face")
 
 # Ambil token dari Streamlit secrets
-api_key = st.secrets["HF_TOKEN"]
+api_key = st.secrets["TOKEN"]
 
 # Buat client Hugging Face
 client = InferenceClient(
