@@ -1,38 +1,29 @@
 import streamlit as st
-from openai import OpenAI
+from huggingface_hub import InferenceClient
 
-# Judul aplikasi
-st.title("💬 Chat dengan Model OpenAI")
+st.title("Chat dengan Model Hugging Face")
 
-# Ambil API Key dari Streamlit secrets
-api_key = st.secrets["TOKEN"]
+# Ambil token dari Streamlit secrets
+api_key = st.secrets["HF_TOKEN"]
 
-# Buat client OpenAI
-client = OpenAI(api_key=api_key)
+# Buat client Hugging Face
+client = InferenceClient(
+    model="mistralai/Mistral-7B-Instruct-v0.3",  # contoh model gratis
+    token=api_key
+)
 
 # Input pengguna
 user_input = st.text_input("Tulis pertanyaan kamu:")
 
-# Jika ada input
+# Tombol kirim
 if st.button("Kirim"):
-    if user_input.strip():
-        try:
-            # Panggil API OpenAI
-            response = client.chat.completions.create(
-                model="gpt-4o-mini",  # bisa diganti gpt-4o, gpt-4.1, dsb
-                messages=[
-                    {"role": "system", "content": "You are a helpful assistant."},
-                    {"role": "user", "content": user_input}
-                ],
-                max_tokens=512,
-                temperature=0.7,
-            )
-
-            # Tampilkan jawaban
-            st.subheader("Jawaban Model:")
-            st.write(response.choices[0].message.content)
-
-        except Exception as e:
-            st.error(f"Terjadi error: {e}")
+    if user_input.strip() != "":
+        response = client.text_generation(
+            user_input,
+            max_new_tokens=200,
+            temperature=0.7
+        )
+        st.markdown("**Jawaban Model:**")
+        st.write(response)
     else:
         st.warning("Silakan tulis pertanyaan terlebih dahulu!")
