@@ -11,6 +11,3 @@ client = OpenAI(api_key=api_key)
 
 # Input pengguna
 user_input = st.text_input("Tulis pertanyaan kamu:")
-
-# Tombol kirim
-if st.button("Kirim"):
