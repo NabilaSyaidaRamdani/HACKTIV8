@@ -14,7 +14,6 @@ token = st.secrets["TOKEN"]
 
 # Buat credential
 import streamlit as st
-from azure.core.credentials import AzureKeyCredential
 
 # Ambil dari secrets
 token = st.secrets["TOKEN"]
