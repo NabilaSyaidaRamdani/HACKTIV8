@@ -10,7 +10,7 @@ st.title("Chat dengan Model DeepSeek-R1")
 # Pastikan di Streamlit Cloud sudah ditambahkan:
 # [GITHUB]
 # TOKEN = "ghp_...."
-token = st.secrets["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"]
+token = st.secrets["TOKEN"]
 
 # Buat credential
 credential = AzureKeyCredential(token)
