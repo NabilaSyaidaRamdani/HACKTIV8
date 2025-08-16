@@ -1,3 +1,5 @@
-streamlit>=1.28
-azure-core>=1.31
-azure-ai-inference>=1.0.0
+streamlit
+azure-core
+azure-ai-inference
+azure-identity
+
