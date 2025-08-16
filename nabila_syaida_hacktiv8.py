@@ -3,7 +3,7 @@ import streamlit as st
 st.title('Nabila Syaida')
 
 # Ambil token dari Streamlit Secrets
-token = st.secrets["GITHUB_TOKEN"]
+token = st.secrets["API_KEY"]
 credential = AzureKeyCredential(token)
 
 client = ChatCompletionsClient(
