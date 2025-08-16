@@ -19,7 +19,7 @@ import streamlit as st
 token = st.secrets["TOKEN"]
 
 # Gunakan variabel 'token', bukan 'TOKEN'
-credential = AzureKeyCredential(TOKEN)
+credential = AzureKeyCredential(token)
 
 # ===========================
 # Buat client
