@@ -6,9 +6,9 @@ st.title("Chat dengan Model Hugging Face")
 # Ambil token dari Streamlit secrets
 api_key = st.secrets["TOKEN"]
 
-# Buat client Hugging Face
+# Pilih model gratis di Hugging Face
 client = InferenceClient(
-    model="mistralai/Mistral-7B-Instruct-v0.3",  # contoh model gratis
+    model="distilgpt2",  # bisa diganti dengan model lain
     token=api_key
 )
 
@@ -19,7 +19,7 @@ user_input = st.text_input("Tulis pertanyaan kamu:")
 if st.button("Kirim"):
     if user_input.strip() != "":
         response = client.text_generation(
-            user_input,
+            prompt=user_input,
             max_new_tokens=200,
             temperature=0.7
         )
