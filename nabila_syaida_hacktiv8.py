@@ -1,15 +1,4 @@
 # ===========================
-# Install dependencies (jika belum)
-# ===========================
-# pip install streamlit azure-ai-inference azure-core
-
-import streamlit as st
-import os
-from azure.core.credentials import AzureKeyCredential
-from azure.ai.inference import ChatCompletionsClient
-from azure.ai.inference.models import UserMessage
-
-# ===========================
 # Set GitHub token
 # ===========================
 os.environ["GITHUB_TOKEN"] = "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"
