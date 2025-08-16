@@ -1,55 +1,46 @@
 import streamlit as st
+from azure.core.credentials import AzureKeyCredential
+from azure.ai.inference import ChatCompletionsClient
+from azure.ai.inference.models import UserMessage
 
-st.set_page_config(page_title="GENAI Chat", page_icon="🤖")
+# ===========================
+# Judul aplikasi
+st.title("Chat dengan Model DeepSeek-R1")
 
-st.title("GENAI Chat Bot")
-st.write("Chat dengan model DeepSeek-R1 dari GitHub via Azure API")
+# ===========================
+# Ambil GitHub token dari Streamlit Secrets
+# Pastikan di Streamlit Cloud sudah ditambahkan:
+# [GITHUB]
+# TOKEN = "ghp_...."
+token = st.secrets["GITHUB"]["TOKEN"]
 
-# Ambil token dari Streamlit Secrets
-try:
-    token = st.secrets["GITHUB"]["TOKEN"]
-except KeyError:
-    st.error("Secret GITHUB/TOKEN belum ditambahkan di Streamlit Cloud!")
-    st.stop()
-
-# Credential & Client
+# Buat credential
 credential = AzureKeyCredential(token)
+
+# ===========================
+# Buat client
 client = ChatCompletionsClient(
     endpoint="https://models.github.ai/inference",
-    credential=credential,
+    credential=credential
 )
 
-# Sidebar untuk parameter
-max_tokens = st.sidebar.slider("Max Tokens", min_value=256, max_value=2048, value=512, step=128)
+# ===========================
+# Input pengguna
+user_input = st.text_input("Tulis pertanyaan kamu:")
 
-# Load chat log (jika ada)
-if "chat_log" not in st.session_state:
-    st.session_state.chat_log = []
-
-# Input user
-user_input = st.text_input("Kamu:", "")
-
-if user_input:
-    st.session_state.chat_log.append(f"User: {user_input}")
-    
-    # Kirim ke model
-    try:
+# ===========================
+# Tombol kirim
+if st.button("Kirim"):
+    if user_input.strip() != "":
+        # Kirim pesan ke model
         response = client.complete(
             messages=[UserMessage(user_input)],
             model="deepseek/DeepSeek-R1",
-            max_tokens=max_tokens,
+            max_tokens=1024
         )
-        bot_response = response.choices[0].message.content
-    except Exception as e:
-        bot_response = f"Error saat request ke API: {e}"
-    
-    st.session_state.chat_log.append(f"Bot: {bot_response}")
 
-# Tampilkan chat log
-for msg in st.session_state.chat_log:
-    st.write(msg)
-
-# Optional: save chat log ke file
-with open("chat_log.txt", "w", encoding="utf-8") as f:
-    for msg in st.session_state.chat_log:
-        f.write(msg + "\n")
+        # Tampilkan jawaban
+        st.markdown("**Jawaban Model:**")
+        st.write(response.choices[0].message.content)
+    else:
+        st.warning("Silakan tulis pertanyaan terlebih dahulu!")
