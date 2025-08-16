@@ -1,9 +1,10 @@
 import streamlit as st
+from azure.core.credentials import AzureKeyCredential
+from azure.ai.inference import ChatCompletionsClient
+from azure.ai.inference.models import UserMessage
 
-st.title('Nabila Syaida')
-
-# Ambil token dari Streamlit Secrets
-token = st.secrets["API_KEY"]
+# Ambil token dari secret
+token = st.secrets["GITHUB"]["TOKEN"]
 credential = AzureKeyCredential(token)
 
 client = ChatCompletionsClient(
