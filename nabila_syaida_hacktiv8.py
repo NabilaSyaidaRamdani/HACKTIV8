@@ -1,7 +1,4 @@
 import streamlit as st
-from azure.core.credentials import AzureKeyCredential
-from azure.ai.inference import ChatCompletionsClient
-from azure.ai.inference.models import UserMessage
 
 st.set_page_config(page_title="GENAI Chat", page_icon="🤖")
 
