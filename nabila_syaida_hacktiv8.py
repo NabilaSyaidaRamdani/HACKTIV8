@@ -1,16 +1,13 @@
 import streamlit as st
 from openai import OpenAI
 
-st.title("Chat dengan Model DeepSeek-R1")
+st.title("Chat dengan Model OpenAI")
 
-# Ambil token dari Streamlit secrets
-token = st.secrets["TOKEN"]
+# Ambil API Key dari Streamlit secrets
+api_key = st.secrets["TOKEN"]
 
-# Buat client
-client = OpenAI(
-    base_url="https://models.inference.ai.azure.com",
-    api_key=token,
-)
+# Buat client OpenAI
+client = OpenAI(api_key=api_key)
 
 # Input pengguna
 user_input = st.text_input("Tulis pertanyaan kamu:")
@@ -19,13 +16,13 @@ user_input = st.text_input("Tulis pertanyaan kamu:")
 if st.button("Kirim"):
     if user_input.strip() != "":
         response = client.chat.completions.create(
-            model="deepseek-ai/deepseek-r1",
+            model="gpt-4o-mini",   # model OpenAI, bisa ganti misalnya gpt-4o
             messages=[
                 {"role": "system", "content": "You are a helpful data science assistant."},
                 {"role": "user", "content": user_input}
             ],
             max_tokens=512,
-            temperature=0.7,  # lebih kreatif
+            temperature=0.7,
         )
 
         st.markdown("**Jawaban Model:**")
