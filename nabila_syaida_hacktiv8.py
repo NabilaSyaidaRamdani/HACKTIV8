@@ -13,7 +13,14 @@ st.title("Chat dengan Model DeepSeek-R1")
 token = st.secrets["TOKEN"]
 
 # Buat credential
-credential = AzureKeyCredential(TOKEN)
+import streamlit as st
+from azure.core.credentials import AzureKeyCredential
+
+# Ambil dari secrets
+token = st.secrets["TOKEN"]
+
+# Gunakan variabel 'token', bukan 'TOKEN'
+credential = AzureKeyCredential(token)
 
 # ===========================
 # Buat client
