@@ -2,4 +2,4 @@ streamlit
 azure-core
 azure-ai-inference
 azure-identity
-
+openai
