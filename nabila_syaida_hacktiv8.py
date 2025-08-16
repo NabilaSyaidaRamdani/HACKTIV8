@@ -13,7 +13,7 @@ st.title("Chat dengan Model DeepSeek-R1")
 token = st.secrets["TOKEN"]
 
 # Buat credential
-credential = AzureKeyCredential(token)
+credential = AzureKeyCredential(TOKEN)
 
 # ===========================
 # Buat client
