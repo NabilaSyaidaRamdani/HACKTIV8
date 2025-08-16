@@ -1,47 +1,29 @@
 import streamlit as st
+from openai import OpenAI
 
-
-# ===========================
-# Judul aplikasi
 st.title("Chat dengan Model DeepSeek-R1")
 
-# ===========================
-# Ambil GitHub token dari Streamlit Secrets
-# Pastikan di Streamlit Cloud sudah ditambahkan:
-# [GITHUB]
-# TOKEN = "ghp_...."
+# Ambil token GitHub dari secrets
 token = st.secrets["TOKEN"]
 
-# Buat credential
-import streamlit as st
-
-# Ambil dari secrets
-token = st.secrets["TOKEN"]
-
-
-# ===========================
 # Buat client
-client = ChatCompletionsClient(
-    endpoint="https://models.github.ai/inference",
-    credential=credential
+client = OpenAI(
+    base_url="https://models.github.ai/v1",
+    api_key=token,
 )
 
-# ===========================
 # Input pengguna
 user_input = st.text_input("Tulis pertanyaan kamu:")
 
-# ===========================
 # Tombol kirim
 if st.button("Kirim"):
     if user_input.strip() != "":
-        # Kirim pesan ke model
-        response = client.complete(
-            messages=[UserMessage(user_input)],
-            model="deepseek/DeepSeek-R1",
+        response = client.chat.completions.create(
+            model="deepseek/deepseek-r1",
+            messages=[{"role": "user", "content": user_input}],
             max_tokens=1024
         )
 
-        # Tampilkan jawaban
         st.markdown("**Jawaban Model:**")
         st.write(response.choices[0].message.content)
     else:
