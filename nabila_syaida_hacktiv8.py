@@ -19,7 +19,7 @@ user_input = st.text_input("Tulis pertanyaan kamu:")
 if st.button("Kirim"):
     if user_input.strip() != "":
         response = client.chat.completions.create(
-            model="deepseek-r1",
+            model="deepseek-ai/deepseek-r1",
             messages=[{"role": "user", "content": user_input}],
             max_tokens=512
         )
